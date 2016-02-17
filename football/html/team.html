@@ -1,0 +1,95 @@
+{% extends 'external/main.html' %}
+
+{% block title %}{{ title }} | Fantasy Football Predictor{% endblock %}
+
+{% load staticfiles %}
+
+{% block body %}
+<aside class="call-to-action bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>{{ teamname }}</h1>
+            </div>
+        </div>
+    </div>
+</aside>
+<i id="scoring" style="display: none;">{{ scoring }}</i>
+<aside class="about">
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-2"></div>
+            <div class="col-lg-8 text-center">
+              <h4><a href="/team/edit/{{ teamnum }}/">Edit Team</a> <a class="text-warning" style="cursor: pointer;" id="delete">Delete Team</a></h4>
+              <i id="teamnum" style="display: none;">{{ teamnum }}</i>
+              <i id="teamname" style="display: none;">{{ teamname }}</i>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Player</th>
+                      <th class="text-center">Position</th>
+                      <th class="text-center">Points</th>
+                      <th class="text-center">Full Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for name in qb %}
+                      <tr>
+                        <td id="qbname{{ forloop.counter }}">{{ name }}</td>
+                        <td>QB</td>
+                        <td id="qbpoints{{ forloop.counter }}" class="qb-points points"></td>
+                        <td><a href="/search/results/?name={{ name }}&scoring={{ scoring }}" class="loading-link">More Details</a></td>
+                      </tr>
+                    {% endfor %}
+                    {% for name in rb %}
+                      <tr>
+                        <td id="rbname{{ forloop.counter }}">{{ name }}</td>
+                        <td>RB</td>
+                        <td id="rbpoints{{ forloop.counter }}" class="rb-points points"></td>
+                        <td><a href="/search/results/?name={{ name }}&scoring={{ scoring }}" class="loading-link">More Details</a></td>
+                      </tr>
+                    {% endfor %}
+                    {% for name in wr %}
+                      <tr>
+                        <td id="wrname{{ forloop.counter }}">{{ name }}</td>
+                        <td>WR</td>
+                        <td id="wrpoints{{ forloop.counter }}" class="wr-points points"></td>
+                        <td><a href="/search/results/?name={{ name }}&scoring={{ scoring }}" class="loading-link">More Details</a></td>
+                      </tr>
+                    {% endfor %}
+                    {% for name in te %}
+                      <tr>
+                        <td id="tename{{ forloop.counter }}">{{ name }}</td>
+                        <td>TE</td>
+                        <td id="tepoints{{ forloop.counter }}" class="te-points points"></td>
+                        <td><a href="/search/results/?name={{ name }}&scoring={{ scoring }}" class="loading-link">More Details</a></td>
+                      </tr>
+                    {% endfor %}
+                    {% for name in k %}
+                      <tr>
+                        <td id="kname{{ forloop.counter }}">{{ name }}</td>
+                        <td>K</td>
+                        <td id="kpoints{{ forloop.counter }}" class="k-points points"></td>
+                        <td><a href="/search/results/?name={{ name }}&scoring={{ scoring }}" class="loading-link">More Details</a></td>
+                      </tr>
+                    {% endfor %}
+                    {% for name in other %}
+                      <tr>
+                        <td>{{ name }}</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </div>
+</aside>
+{% endblock %}
+{% block scriptarea %}
+<script src="{% static 'js/points.js' %}"></script>
+<script src="{% static 'js/delete_team.js' %}"></script>
+{% endblock %}
